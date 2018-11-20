@@ -1,0 +1,16 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin:0;
+    font: 16px Arial;
+}
+
+#wrapper {
+    padding: 10%;
+}
+
+.form-check {
+    margin: 10px;
+}
