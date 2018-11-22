@@ -1,7 +1,7 @@
 package pl.edu.pk.fmi.zjadlbym.co.config;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.edu.pk.fmi.zjadlbym.co.Recipe;
+import pl.edu.pk.fmi.zjadlbym.co.RecipeDto;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -11,17 +11,17 @@ import java.net.URL;
 public class RestController {
 
     @RequestMapping("/get")
-    public Recipe[] przepisyGet() throws MalformedURLException {
-        Recipe[] recipes = new Recipe[] {
-                new Recipe(
+    public RecipeDto[] przepisyGet() throws MalformedURLException {
+        RecipeDto[] recipeDtos = new RecipeDto[] {
+                new RecipeDto(
                         "Spaghetti",
-                        new URL("https://www.jamieoliver.com/recipes/pasta-recipes/classic-tomato-spaghetti/")),
-                new Recipe(
+                        new URL("https://www.jamieoliver.com/recipeDtos/pasta-recipeDtos/classic-tomato-spaghetti/")),
+                new RecipeDto(
                         "Scrambled eggs",
                         new URL("https://www.jamieoliver.com/news-and-features/features/how-to-make-perfect-scrambled-eggs/"))
         };
 
-        return recipes;
+        return recipeDtos;
     }
 
 }

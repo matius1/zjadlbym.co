@@ -2,11 +2,11 @@ package pl.edu.pk.fmi.zjadlbym.co;
 
 import java.net.URL;
 
-public class Recipe {
+public class RecipeDto {
     private String name;
     private String url;
 
-    public Recipe(String name, URL url) {
+    public RecipeDto(String name, URL url) {
         if(name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Provided name is invalid");
         }
