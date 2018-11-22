@@ -14,3 +14,38 @@ body {
 .form-check {
     margin: 10px;
 }
+
+#ingredients {
+    margin: 50px 0;
+}
+
+.ingredient {
+    position: relative;
+    display: inline-block;
+    width: 100px;
+    background:DodgerBlue;
+    padding: 5px 10px;
+    color: white;
+    border-radius: 25px;
+    margin-right: 10px;
+}
+
+.ingredient--delete {
+    position: absolute;
+    right: 10px;
+    top: 6px;
+    width: 15px;
+    height: 15px;
+    background:white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.ingredient--delete:before {
+    content: 'x';
+    color: dodgerblue;
+    font-weight: 300;
+    position: absolute;
+    left:3px;
+    top: -2px;
+}
