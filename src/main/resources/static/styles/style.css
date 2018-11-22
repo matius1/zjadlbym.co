@@ -49,3 +49,12 @@ body {
     left:3px;
     top: -2px;
 }
+
+#recipe-template {
+    display: none;
+}
+
+.recipe-thumbnail {
+    width: 40px;
+    height: 40px;
+}

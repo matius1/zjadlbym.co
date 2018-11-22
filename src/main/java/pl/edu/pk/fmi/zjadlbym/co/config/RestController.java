@@ -28,10 +28,9 @@ public class RestController
     }
 
     @RequestMapping("/get")
-    public ResponseEntity<RecipeDto[]> przepisyGet()
+    public ResponseEntity<RecipeDto[]> przepisyGet(String ingredients)
     {
-        String ingredientsToFind = "onions,garlic";
-        ResponseEntity<String> response = restTemplate.getForEntity(RECIPE_URL + ingredientsToFind, String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(RECIPE_URL + ingredients, String.class);
 
         if (OK.equals(response.getStatusCode()))
         {
