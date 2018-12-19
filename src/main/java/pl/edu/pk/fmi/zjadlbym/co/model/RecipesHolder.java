@@ -3,6 +3,7 @@ package pl.edu.pk.fmi.zjadlbym.co.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecipesHolder implements Serializable
@@ -21,7 +22,7 @@ public class RecipesHolder implements Serializable
 
     public String getSiteName()
     {
-        return siteName;
+        return siteName == null ? "" : siteName;
     }
 
     public void setSiteName(String siteName)
@@ -41,7 +42,7 @@ public class RecipesHolder implements Serializable
 
     public String getSiteUrl()
     {
-        return siteUrl;
+        return siteUrl == null ? "" : siteUrl;
     }
 
     public void setSiteUrl(String siteUrl)
@@ -51,7 +52,12 @@ public class RecipesHolder implements Serializable
 
     public List<Recipe> getRecipes()
     {
-        return recipes;
+        if (recipes != null)
+        {
+            return recipes;
+        }
+
+        return new ArrayList<>();
     }
 
     public void setRecipes(List<Recipe> recipes)
