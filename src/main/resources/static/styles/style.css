@@ -16,7 +16,7 @@ body {
 }
 
 #ingredients {
-    margin: 50px 0;
+    margin: 25px 0;
 }
 
 .ingredient {
@@ -57,4 +57,9 @@ body {
 .recipe-thumbnail {
     width: 40px;
     height: 40px;
+}
+
+#validation-error {
+    display: block;
+    visibility: hidden;
 }

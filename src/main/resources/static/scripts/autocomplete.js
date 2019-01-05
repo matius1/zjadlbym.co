@@ -30,6 +30,9 @@ var autocomplete = (function () {
 
     var addListeners = function () {
         input.addEventListener("input", function(e) {
+            if (document.getElementById('validation-error').style.visibility === "visible") {
+                document.getElementById('validation-error').style.visibility = "hidden";
+            }
             var a, b, i, val = this.value;
             closeAllLists();
             if (!val) { return false;}
@@ -103,24 +106,31 @@ var autocomplete = (function () {
             }
 
             if (custom) {
-                var div = document.createElement('div');
-                div.className = 'ingredient';
-                div.setAttribute('data-name', input.value);
-                var nameSpan = document.createElement('span');
-                nameSpan.className = "ingredient--name";
-                nameSpan.innerHTML = input.value;
-                var deleteBtn = document.createElement('span');
-                deleteBtn.className = 'ingredient--delete';
-                div.appendChild(nameSpan);
-                deleteBtn = div.appendChild(deleteBtn);
-                document.getElementById('ingredients').appendChild(div);
-                input.value = '';
+                var re = /^[a-zA-Z]+$/;
+                var isValid = re.test(input.value);
 
-                deleteBtn.addEventListener('click', function (e) {
-                    if (this.parentElement.dataset.name !== "" && this.parentElement.dataset.name.substr(0, this.parentElement.dataset.name.length).toUpperCase() == this.parentElement.dataset.name.toUpperCase()) {
-                        document.getElementById('ingredients').removeChild(this.parentElement);
-                    }
-                })
+                if (isValid) {
+                    var div = document.createElement('div');
+                    div.className = 'ingredient';
+                    div.setAttribute('data-name', input.value);
+                    var nameSpan = document.createElement('span');
+                    nameSpan.className = "ingredient--name";
+                    nameSpan.innerHTML = input.value;
+                    var deleteBtn = document.createElement('span');
+                    deleteBtn.className = 'ingredient--delete';
+                    div.appendChild(nameSpan);
+                    deleteBtn = div.appendChild(deleteBtn);
+                    document.getElementById('ingredients').appendChild(div);
+                    input.value = '';
+
+                    deleteBtn.addEventListener('click', function (e) {
+                        if (this.parentElement.dataset.name !== "" && this.parentElement.dataset.name.substr(0, this.parentElement.dataset.name.length).toUpperCase() == this.parentElement.dataset.name.toUpperCase()) {
+                            document.getElementById('ingredients').removeChild(this.parentElement);
+                        }
+                    });
+                } else {
+                    document.getElementById('validation-error').style.visibility = "visible";
+                }
             }
         });
     };
