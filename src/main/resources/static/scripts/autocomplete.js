@@ -1,10 +1,34 @@
+"use strict";
+
 var autocomplete = (function () {
     var options;
     var input;
     var currentFocus;
 
-    var addListeners = function () {
+    var removeActive = function (x) {
+        for (var i = 0; i < x.length; i++) {
+            x[i].classList.remove("autocomplete-active");
+        }
+    };
 
+    var addActive = function (x) {
+        if (!x) return false;
+        removeActive(x);
+        if (currentFocus >= x.length) currentFocus = 0;
+        if (currentFocus < 0) currentFocus = (x.length - 1);
+        x[currentFocus].classList.add("autocomplete-active");
+    };
+
+    var closeAllLists = function (elmnt) {
+        var x = document.getElementsByClassName("autocomplete-items");
+        for (var i = 0; i < x.length; i++) {
+            if (elmnt != x[i] && elmnt != input) {
+                x[i].parentNode.removeChild(x[i]);
+            }
+        }
+    };
+
+    var addListeners = function () {
         input.addEventListener("input", function(e) {
             var a, b, i, val = this.value;
             closeAllLists();
@@ -50,7 +74,7 @@ var autocomplete = (function () {
         });
         
         document.getElementById("add").addEventListener("click", function (e) {
-            for (i = 0; i < options.length; i++) {                
+            for (var i = 0; i < options.length; i++) {
                 if (input.value !== "" && options[i].substr(0, input.value.length).toUpperCase() == input.value.toUpperCase()) {
                     var div = document.createElement('div');
                     div.className = 'ingredient';
@@ -61,7 +85,7 @@ var autocomplete = (function () {
                     var deleteBtn = document.createElement('span');
                     deleteBtn.className = 'ingredient--delete';
                     div.appendChild(nameSpan);
-                    deleteButton = div.appendChild(deleteBtn);
+                    deleteBtn = div.appendChild(deleteBtn);
                     document.getElementById('ingredients').appendChild(div);                    
                     options.splice(i, 1);
                     input.value = '';
@@ -71,33 +95,34 @@ var autocomplete = (function () {
                             document.getElementById('ingredients').removeChild(this.parentElement);
                             options.push(this.parentElement.dataset.name);
                         }
-                    })
+                    });
+                    return;
+                } else {
+                    var custom = true;
                 }
             }
+
+            if (custom) {
+                var div = document.createElement('div');
+                div.className = 'ingredient';
+                div.setAttribute('data-name', input.value);
+                var nameSpan = document.createElement('span');
+                nameSpan.className = "ingredient--name";
+                nameSpan.innerHTML = input.value;
+                var deleteBtn = document.createElement('span');
+                deleteBtn.className = 'ingredient--delete';
+                div.appendChild(nameSpan);
+                deleteBtn = div.appendChild(deleteBtn);
+                document.getElementById('ingredients').appendChild(div);
+                input.value = '';
+
+                deleteBtn.addEventListener('click', function (e) {
+                    if (this.parentElement.dataset.name !== "" && this.parentElement.dataset.name.substr(0, this.parentElement.dataset.name.length).toUpperCase() == this.parentElement.dataset.name.toUpperCase()) {
+                        document.getElementById('ingredients').removeChild(this.parentElement);
+                    }
+                })
+            }
         });
-    };
-
-    var addActive = function (x) {
-        if (!x) return false;
-        removeActive(x);
-        if (currentFocus >= x.length) currentFocus = 0;
-        if (currentFocus < 0) currentFocus = (x.length - 1);
-        x[currentFocus].classList.add("autocomplete-active");
-    };
-
-    var removeActive = function (x) {
-        for (var i = 0; i < x.length; i++) {
-            x[i].classList.remove("autocomplete-active");
-        }
-    };
-
-    var closeAllLists = function (elmnt) {
-        var x = document.getElementsByClassName("autocomplete-items");
-        for (var i = 0; i < x.length; i++) {
-          if (elmnt != x[i] && elmnt != input) {
-          x[i].parentNode.removeChild(x[i]);
-        }
-      }
     };
 
     var init = function(array, el) {
