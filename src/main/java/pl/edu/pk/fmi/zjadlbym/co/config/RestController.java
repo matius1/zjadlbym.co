@@ -1,16 +1,29 @@
 package pl.edu.pk.fmi.zjadlbym.co.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 import pl.edu.pk.fmi.zjadlbym.co.model.Recipe;
+import org.springframework.web.util.WebUtils;
+import org.springframework.web.util.WebUtils;
 import pl.edu.pk.fmi.zjadlbym.co.model.RecipeDto;
 import pl.edu.pk.fmi.zjadlbym.co.model.RecipesHolder;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.time.Instant;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.Instant;
+import java.util.*;
 
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
@@ -20,22 +33,38 @@ import static org.springframework.http.HttpStatus.*;
 @RequestMapping("/przepis")
 public class RestController
 {
+    private Logger logger = LoggerFactory.getLogger(RestController.class);
+
     private static final String RECIPE_URL = "http://www.recipepuppy.com/api/?i=";
     private static final String PAGE = "&p=";
     private static final String COMMA = ",";
+    private final String cookieName = "zjadlbym.co";
 
-    private RestTemplate restTemplate;
-    private ObjectMapper objectMapper;
+    private Map<String, List<Map<Instant, String>>> sessions = new HashMap<>();
 
-    public RestController()
+    private RestTemplate restTemplate = new RestTemplate();
+    private ObjectMapper objectMapper = new ObjectMapper();
+
+    @RequestMapping("/history")
+    public List historyGet(HttpServletRequest request)
     {
-        restTemplate = new RestTemplate();
-        objectMapper = new ObjectMapper();
+        Cookie cookie = WebUtils.getCookie(request, cookieName);
+
+        String sessionID = cookie != null ? cookie.getValue() : "";
+
+        List<Map<Instant, String>> history = sessions.getOrDefault(sessionID, Collections.emptyList());
+        logger.info("Getting history for : {} - {}", sessionID, history);
+
+        return history;
     }
 
     @RequestMapping("/get")
-    public ResponseEntity<RecipeDto[]> przepisyGet(String ingredients)
+    public ResponseEntity<RecipeDto[]> przepisyGet(String ingredients, HttpServletRequest request)
     {
+        logger.info("Request: {}", ingredients);
+
+        HttpHeaders sessionHeaders = manageSessions(ingredients, request);
+
         //TODO: sebastianpolanski - to be changed for values taken from user
         int numberOfRecipesToShow = 5;
         int maxNoOfMissingIngredients = 5;
@@ -54,15 +83,15 @@ public class RestController
 
             if (res.length > 0)
             {
-                return new ResponseEntity<>(res, OK);
+                return ResponseEntity.ok().headers(sessionHeaders).body(res);
             }
 
-            return new ResponseEntity<>(NO_CONTENT);
+            return ResponseEntity.noContent().headers(sessionHeaders).build();
 
         }
         catch (IOException e)
         {
-            return new ResponseEntity<>(BAD_REQUEST);
+            return ResponseEntity.badRequest().headers(sessionHeaders).build();
         }
     }
 
@@ -137,5 +166,38 @@ public class RestController
                 .limit(numberOfShownRecipes)
                 .map(RecipeDto::new)
                 .toArray(RecipeDto[]::new);
+    }
+
+    private HttpHeaders manageSessions(String ingredients, HttpServletRequest request)
+    {
+        Cookie cookie = WebUtils.getCookie(request, cookieName);
+        String sessionID = cookie != null ? cookie.getValue() : "";
+        HttpHeaders returnCookie = new HttpHeaders();
+
+        if (sessionID.isEmpty())
+        {
+            String newID = String.valueOf(UUID.randomUUID());
+            addToHistory(ingredients, newID);
+            returnCookie.add("Set-Cookie", cookieName + "=" + newID);
+
+        }
+        else
+        {
+            addToHistory(ingredients, sessionID);
+            returnCookie.add("Set-Cookie", cookieName + "=" + sessionID);
+        }
+
+        return returnCookie;
+    }
+
+    private void addToHistory(String ingredients, String sessionID)
+    {
+        Map<Instant, String> record = Collections.singletonMap(Instant.now(), ingredients);
+        List<Map<Instant, String>> history = sessions.getOrDefault(sessionID, new ArrayList<>());
+        history.add(record);
+
+        logger.info("Add to session cache : {} - {}", sessionID, record);
+
+        sessions.put(sessionID, history);
     }
 }
