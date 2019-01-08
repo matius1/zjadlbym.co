@@ -8,23 +8,36 @@
     <link rel="stylesheet" href="styles/bootstrap.min.css">
     <link rel='stylesheet' href="styles/style.css">
     <link rel="stylesheet" href="styles/autocomplete.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 
 <body>
     <div class="container" id="wrapper">
-        <form>
-            <div class="form-group autocomplete">
-                <input type="text" class="form-control" id="searchBar" placeholder="Ingredients">
+        <header>
+            <h1><strong>ZJADLBYM.</strong>CO</h1>
+            <i class="material-icons">local_dining</i>
+        </header>
+        <div id="form-container">
+            <h3>Find recipe</h3>
+            <form>
+                <div id="search-bar-container">
+                    <div class="form-group autocomplete">
+                            <input type="text" class="form-control" id="searchBar" placeholder="Ingredients">
+                    </div>
+                    <button id="add" type="button" class="btn btn-primary">Add</button>
+                </div>
+                <div id="validation-error" class="invalid-feedback">
+                        Incorrect ingredient name
+                    </div>
+                <div id="ingredients">
+                    <p>Selected ingredients</p>
+                </div>
+            </form>
+            <div id="search-button-container">
+                <button id="search" type="button" class="btn btn-success">Search for recipe</button> 
             </div>
-            <button id="add" type="button" class="btn btn-primary">Add</button>
-        </form>
-        <div id="validation-error" class="invalid-feedback">
-            Incorrect ingredient name
         </div>
-        <div id="ingredients">
-            <p>Selected ingredients</p>
-        </div>
-        <button id="search" type="button" class="btn btn-success">Search for recipe</button>
+        
         <div id="results">
             <div class="recipes">
             </div>
@@ -37,12 +50,16 @@
             </div>
         </div>
     </div>
-
+    <div id="cookie-consent">
+        <p>This site is using cookies to ensure you get the best user experience. By using our website you agree to our <u>Cookie Policy</u>.</p>
+        <button id="cookie-approval" class="btn btn-success">OK, I got it.</button>
+    </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="scripts/popper.min.js"></script>
     <script src="scripts/bootstrap.min.js"></script>
     <script src="scripts/autocomplete.js"></script>
     <script src="scripts/pageManager.js"></script>
+    <script src="scripts/cookie-consent.js"></script>
     <script>
         autocomplete.init(["Fluor", "Salt", "Pepper", "Water", "Butter"], document.getElementById("searchBar"));
     </script>

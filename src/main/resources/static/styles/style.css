@@ -1,5 +1,7 @@
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -7,8 +9,54 @@ body {
     font: 16px Arial;
 }
 
+header {
+    position: relative;
+}
+
+header h1 {
+    margin: 0.5em;
+    font-size: 2em;
+    line-height: 1em;
+}
+
+header i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 #wrapper {
-    padding: 10%;
+    padding: 5%;
+    max-width: 1140px;
+    margin: 0 auto;
+    
+}
+
+#wrapper > * {
+    margin: 20px auto;
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+
+#form-container {
+    padding: 10px;
+    position: relative;
+}
+
+#search-bar-container {
+    display: flex;
+    flex-direction: row;
+}
+
+#search-bar-container div {
+    flex-grow: 9;
+    margin-bottom: 0;
+}
+
+#search-bar-container #add {
+    flex-grow: 1;
+    align-self: flex-start;
 }
 
 .form-check {
@@ -16,7 +64,7 @@ body {
 }
 
 #ingredients {
-    margin: 25px 0;
+    margin: 10px 0;
 }
 
 .ingredient {
@@ -27,7 +75,7 @@ body {
     padding: 5px 10px;
     color: white;
     border-radius: 25px;
-    margin-right: 10px;
+    margin: 5px;
 }
 
 .ingredient--delete {
@@ -50,6 +98,16 @@ body {
     top: -2px;
 }
 
+#search-button-container {
+    position: relative;
+    height: 38px;
+}
+
+#search {
+    position: absolute;
+    right: 0;
+}
+
 #recipe-template {
     display: none;
 }
@@ -62,4 +120,40 @@ body {
 #validation-error {
     display: block;
     visibility: hidden;
+    margin: 10px 0;
+}
+
+#cookie-consent {
+    position: fixed;
+    bottom: 0;
+    /*left: 0;*/
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    /*flex-wrap: wrap;*/
+    /*display: none;*/
+}
+
+#cookie-consent p {
+    /*width: 70%;*/
+    /*float: left;*/
+}
+
+#cookie-consent button {
+    /*width: 20%;*/
+    /*float: left;*/
+    flex-basis: auto;
+}
+
+@media only screen and (max-width: 600px) {
+
+    #cookie-consent {
+        flex-wrap: wrap;
+    }
+
+    #cookie-consent p {
+        text-align: center;
+    }
 }
