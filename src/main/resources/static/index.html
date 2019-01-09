@@ -8,24 +8,36 @@
     <link rel="stylesheet" href="styles/bootstrap.min.css">
     <link rel='stylesheet' href="styles/style.css">
     <link rel="stylesheet" href="styles/autocomplete.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
-
 <body>
     <div class="container" id="wrapper">
-        <form>
-            <div class="form-group autocomplete">
-                <input type="text" class="form-control" id="searchBar" placeholder="Ingredients">
+        <header>
+            <h1><strong>ZJADLBYM.</strong>CO</h1>
+            <i class="material-icons">local_dining</i>
+        </header>
+        <div id="form">
+            <h3>Find recipe</h3>
+            <form>
+                <div id="form__search-bar">
+                    <div class="form-group autocomplete">
+                            <input type="text" class="form-control" id="searchBar" placeholder="Type product name">
+                    </div>
+                    <button id="add" type="button" class="btn btn-primary">Add</button>
+                </div>
+                <div id="form__validation" class="invalid-feedback">
+                    <p>Incorrect ingredient name</p>
+                </div>
+                <div id="form__ingredients">
+                    <!-- <p>Selected ingredients</p> -->
+                </div>
+            </form>
+            <div id="form__button">
+                <button id="search" type="button" class="btn btn-success">Search</button> 
             </div>
-            <button id="add" type="button" class="btn btn-primary">Add</button>
-        </form>
-        <div id="validation-error" class="invalid-feedback">
-            Incorrect ingredient name
         </div>
-        <div id="ingredients">
-            <p>Selected ingredients</p>
-        </div>
-        <button id="search" type="button" class="btn btn-success">Search for recipe</button>
-        <div id="results">
+        <div id="history" class="empty"></div>
+        <div id="results" class="empty">
             <div class="recipes">
             </div>
             <div id="recipe-template">
@@ -37,12 +49,16 @@
             </div>
         </div>
     </div>
-
+    <div id="cookie-consent">
+        <p>This site is using cookies to ensure you get the best user experience. By using our website you agree to our <u>Cookie Policy</u>.</p>
+        <button id="cookie-approval" class="btn btn-success">OK, I got it.</button>
+    </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="scripts/popper.min.js"></script>
     <script src="scripts/bootstrap.min.js"></script>
     <script src="scripts/autocomplete.js"></script>
     <script src="scripts/pageManager.js"></script>
+    <script src="scripts/cookie-consent.js"></script>
     <script>
         autocomplete.init(["Fluor", "Salt", "Pepper", "Water", "Butter"], document.getElementById("searchBar"));
     </script>

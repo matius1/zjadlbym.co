@@ -1,5 +1,7 @@
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -7,16 +9,67 @@ body {
     font: 16px Arial;
 }
 
+button {
+    text-transform: uppercase;
+}
+
+header {
+    position: relative;
+}
+
+header h1 {
+    margin: 0.5em;
+    font-size: 2em;
+    line-height: 1em;
+}
+
+header i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 #wrapper {
-    padding: 10%;
+    padding: 5%;
+    max-width: 1140px;
+    margin: 0 auto;
+    
+}
+
+#wrapper > * {
+    margin: 20px auto;
+    border: 1px solid #D3D3D3;
+    border-radius: 10px;
+}
+
+#form {
+    padding: 10px;
+    position: relative;
+}
+
+#form__search-bar {
+    display: flex;
+    flex-direction: row;
+}
+
+#form__search-bar div {
+    flex-grow: 9;
+    margin-bottom: 0;
+}
+
+#form__search-bar #add {
+    /* flex-grow: 1; */
+    width: 100px;;
+    align-self: flex-start;
 }
 
 .form-check {
     margin: 10px;
 }
 
-#ingredients {
-    margin: 25px 0;
+#form__ingredients {
+    margin: 10px 0;
 }
 
 .ingredient {
@@ -27,7 +80,7 @@ body {
     padding: 5px 10px;
     color: white;
     border-radius: 25px;
-    margin-right: 10px;
+    margin: 5px;
 }
 
 .ingredient--delete {
@@ -50,6 +103,17 @@ body {
     top: -2px;
 }
 
+#form__button {
+    position: relative;
+    height: 38px;
+}
+
+#search {
+    position: absolute;
+    right: 0;
+    width: 100px;
+}
+
 #recipe-template {
     display: none;
 }
@@ -59,7 +123,69 @@ body {
     height: 40px;
 }
 
-#validation-error {
+#form__validation {
     display: block;
     visibility: hidden;
+    margin: 10px 0;
+}
+
+#form__validation {
+    margin: 10px 0;
+}
+
+.empty {
+    display: none;
+}
+
+.present {
+    display: block;
+}
+
+#cookie-consent {
+    max-width: 1140px;
+    position: fixed;
+    bottom: 0;
+    padding: 10px;
+    flex-direction: row;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
+#cookie-consent.accepted {
+    display: none;
+}
+
+#cookie-consent.not-accepted {
+    display: flex;
+}
+
+#cookie-consent p {
+    flex-grow: 9;
+    margin: 0;
+    align-self: center;
+}
+
+#cookie-consent #cookie-approval {
+    height: 38px;;
+    flex-grow: 1;
+    align-self: center;
+}
+
+@media only screen and (max-width: 600px) {
+
+    #cookie-consent {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    #cookie-consent p {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    #cookie-consent #cookie-approval {
+        width: 150px;
+        flex-grow: unset;
+    }
 }

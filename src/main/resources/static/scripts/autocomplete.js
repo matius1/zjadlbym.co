@@ -30,8 +30,8 @@ var autocomplete = (function () {
 
     var addListeners = function () {
         input.addEventListener("input", function(e) {
-            if (document.getElementById('validation-error').style.visibility === "visible") {
-                document.getElementById('validation-error').style.visibility = "hidden";
+            if (document.getElementById('form__validation').style.visibility === "visible") {
+                document.getElementById('form__validation').style.visibility = "hidden";
             }
             var a, b, i, val = this.value;
             closeAllLists();
@@ -89,13 +89,13 @@ var autocomplete = (function () {
                     deleteBtn.className = 'ingredient--delete';
                     div.appendChild(nameSpan);
                     deleteBtn = div.appendChild(deleteBtn);
-                    document.getElementById('ingredients').appendChild(div);                    
+                    document.getElementById('form__ingredients').appendChild(div);                    
                     options.splice(i, 1);
                     input.value = '';
 
                     deleteBtn.addEventListener('click', function (e) {
                         if (this.parentElement.dataset.name !== "" && this.parentElement.dataset.name.substr(0, this.parentElement.dataset.name.length).toUpperCase() == this.parentElement.dataset.name.toUpperCase()) {
-                            document.getElementById('ingredients').removeChild(this.parentElement);
+                            document.getElementById('form__ingredients').removeChild(this.parentElement);
                             options.push(this.parentElement.dataset.name);
                         }
                     });
@@ -120,16 +120,16 @@ var autocomplete = (function () {
                     deleteBtn.className = 'ingredient--delete';
                     div.appendChild(nameSpan);
                     deleteBtn = div.appendChild(deleteBtn);
-                    document.getElementById('ingredients').appendChild(div);
+                    document.getElementById('form__ingredients').appendChild(div);
                     input.value = '';
 
                     deleteBtn.addEventListener('click', function (e) {
                         if (this.parentElement.dataset.name !== "" && this.parentElement.dataset.name.substr(0, this.parentElement.dataset.name.length).toUpperCase() == this.parentElement.dataset.name.toUpperCase()) {
-                            document.getElementById('ingredients').removeChild(this.parentElement);
+                            document.getElementById('form__ingredients').removeChild(this.parentElement);
                         }
                     });
                 } else {
-                    document.getElementById('validation-error').style.visibility = "visible";
+                    document.getElementById('form__validation').style.visibility = "visible";
                 }
             }
         });
