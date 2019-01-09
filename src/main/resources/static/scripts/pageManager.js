@@ -12,6 +12,7 @@ $(function () {
         $.get("http://localhost:8080/przepis/get",
             "ingredients=" + ingredients,
             function (recipes) {
+                console.log(recipes);
                 for (let recipe of recipes) {
                     let recipeElement = recipeTemplate.clone();
                     const recipeThumbnail = recipe.thumbnail === "" ? noThumbnailPlaceholder : recipe.thumbnail;
@@ -22,6 +23,9 @@ $(function () {
 
                     recipeElement.appendTo($('.recipes'));
                 }
+
+                
+                $('#results').removeClass('empty').addClass('present');
             });
     });
 })

@@ -10,35 +10,34 @@
     <link rel="stylesheet" href="styles/autocomplete.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
-
 <body>
     <div class="container" id="wrapper">
         <header>
             <h1><strong>ZJADLBYM.</strong>CO</h1>
             <i class="material-icons">local_dining</i>
         </header>
-        <div id="form-container">
+        <div id="form">
             <h3>Find recipe</h3>
             <form>
-                <div id="search-bar-container">
+                <div id="form__search-bar">
                     <div class="form-group autocomplete">
-                            <input type="text" class="form-control" id="searchBar" placeholder="Ingredients">
+                            <input type="text" class="form-control" id="searchBar" placeholder="Type product name">
                     </div>
                     <button id="add" type="button" class="btn btn-primary">Add</button>
                 </div>
-                <div id="validation-error" class="invalid-feedback">
-                        Incorrect ingredient name
-                    </div>
-                <div id="ingredients">
-                    <p>Selected ingredients</p>
+                <div id="form__validation" class="invalid-feedback">
+                    <p>Incorrect ingredient name</p>
+                </div>
+                <div id="form__ingredients">
+                    <!-- <p>Selected ingredients</p> -->
                 </div>
             </form>
-            <div id="search-button-container">
-                <button id="search" type="button" class="btn btn-success">Search for recipe</button> 
+            <div id="form__button">
+                <button id="search" type="button" class="btn btn-success">Search</button> 
             </div>
         </div>
         
-        <div id="results">
+        <div id="results" class="empty">
             <div class="recipes">
             </div>
             <div id="recipe-template">

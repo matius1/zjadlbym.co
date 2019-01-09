@@ -9,6 +9,10 @@ body {
     font: 16px Arial;
 }
 
+button {
+    text-transform: uppercase;
+}
+
 header {
     position: relative;
 }
@@ -35,27 +39,28 @@ header i {
 
 #wrapper > * {
     margin: 20px auto;
-    border: 1px solid grey;
+    border: 1px solid #D3D3D3;
     border-radius: 10px;
 }
 
-#form-container {
+#form {
     padding: 10px;
     position: relative;
 }
 
-#search-bar-container {
+#form__search-bar {
     display: flex;
     flex-direction: row;
 }
 
-#search-bar-container div {
+#form__search-bar div {
     flex-grow: 9;
     margin-bottom: 0;
 }
 
-#search-bar-container #add {
-    flex-grow: 1;
+#form__search-bar #add {
+    /* flex-grow: 1; */
+    width: 100px;;
     align-self: flex-start;
 }
 
@@ -63,7 +68,7 @@ header i {
     margin: 10px;
 }
 
-#ingredients {
+#form__ingredients {
     margin: 10px 0;
 }
 
@@ -98,7 +103,7 @@ header i {
     top: -2px;
 }
 
-#search-button-container {
+#form__button {
     position: relative;
     height: 38px;
 }
@@ -106,6 +111,7 @@ header i {
 #search {
     position: absolute;
     right: 0;
+    width: 100px;
 }
 
 #recipe-template {
@@ -117,43 +123,61 @@ header i {
     height: 40px;
 }
 
-#validation-error {
+#form__validation {
     display: block;
     visibility: hidden;
     margin: 10px 0;
 }
 
+#form__validation {
+    margin: 10px 0;
+}
+
+#results.empty {
+    display: none;
+}
+
+#results.present {
+    display: block;
+}
+
 #cookie-consent {
+    max-width: 1140px;
     position: fixed;
     bottom: 0;
-    /*left: 0;*/
     padding: 10px;
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    /*flex-wrap: wrap;*/
-    /*display: none;*/
+    left: 0;
+    right: 0;
+    margin: 0 auto;
 }
 
 #cookie-consent p {
-    /*width: 70%;*/
-    /*float: left;*/
+    flex-grow: 9;
+    margin: 0;
+    align-self: center;
 }
 
 #cookie-consent button {
-    /*width: 20%;*/
-    /*float: left;*/
-    flex-basis: auto;
+    height: 38px;;
+    flex-grow: 1;
+    align-self: center;
 }
 
 @media only screen and (max-width: 600px) {
 
     #cookie-consent {
         flex-wrap: wrap;
+        justify-content: center;
     }
 
     #cookie-consent p {
+        margin: 10px 0;
         text-align: center;
+    }
+
+    #cookie-consent button {
+        max-width: 100px;
     }
 }
