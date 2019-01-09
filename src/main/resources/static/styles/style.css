@@ -133,11 +133,11 @@ header i {
     margin: 10px 0;
 }
 
-#results.empty {
+.empty {
     display: none;
 }
 
-#results.present {
+.present {
     display: block;
 }
 
@@ -146,11 +146,18 @@ header i {
     position: fixed;
     bottom: 0;
     padding: 10px;
-    display: flex;
     flex-direction: row;
     left: 0;
     right: 0;
     margin: 0 auto;
+}
+
+#cookie-consent.accepted {
+    display: none;
+}
+
+#cookie-consent.not-accepted {
+    display: flex;
 }
 
 #cookie-consent p {
@@ -159,7 +166,7 @@ header i {
     align-self: center;
 }
 
-#cookie-consent button {
+#cookie-consent #cookie-approval {
     height: 38px;;
     flex-grow: 1;
     align-self: center;
@@ -177,7 +184,8 @@ header i {
         text-align: center;
     }
 
-    #cookie-consent button {
-        max-width: 100px;
+    #cookie-consent #cookie-approval {
+        width: 150px;
+        flex-grow: unset;
     }
 }

@@ -23,7 +23,6 @@ $(function () {
 
                     recipeElement.appendTo($('.recipes'));
                 }
-
                 
                 $('#results').removeClass('empty').addClass('present');
             });
