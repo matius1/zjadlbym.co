@@ -189,3 +189,7 @@ header i {
         flex-grow: unset;
     }
 }
+
+#history .container-fluid {
+    padding: 10px;
+}
