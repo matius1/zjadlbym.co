@@ -50,15 +50,18 @@ public class RestController {
     }
 
     @RequestMapping("/get")
-    public ResponseEntity<RecipeDto[]> przepisyGet(String ingredients, HttpServletRequest request) {
+    public ResponseEntity<RecipeDto[]> przepisyGet(String ingredients,
+                                                   Integer numberOfRecipesToShow,
+                                                   Integer maxNoOfMissingIngredients,
+                                                   String ingredientsToExclude,
+                                                   HttpServletRequest request) {
         logger.info("Request: {}", ingredients);
 
         HttpHeaders sessionHeaders = manageSessions(ingredients, request);
 
-        //TODO: sebastianpolanski - to be changed for values taken from user
-        int numberOfRecipesToShow = 10;
-        int maxNoOfMissingIngredients = 5;
-        String ingredientsToExclude = "onion,garlic";
+        numberOfRecipesToShow = numberOfRecipesToShow != null ? numberOfRecipesToShow : 10;
+        maxNoOfMissingIngredients = maxNoOfMissingIngredients != null ? maxNoOfMissingIngredients : 1;
+        ingredientsToExclude = ingredientsToExclude != null ? ingredientsToExclude : "";
 
         String ingredientsToSearch =
                 toLowerCase(ingredients) + COMMA + getIngredientsToExclude(toLowerCase(ingredientsToExclude));
@@ -134,7 +137,8 @@ public class RestController {
                                                        int maxNoOfMissingIngredients) {
         List<String> recipeIngredients = new ArrayList<>(recipe.getIngredientsNames());
         recipeIngredients.removeAll(ownedIngredients);
-        return recipeIngredients.size() <= maxNoOfMissingIngredients;
+        boolean isValid = recipeIngredients.size() <= maxNoOfMissingIngredients;
+        return isValid;
     }
 
     private RecipeDto[] getRecipeDtos(List<Recipe> recipes, int numberOfShownRecipes) {
