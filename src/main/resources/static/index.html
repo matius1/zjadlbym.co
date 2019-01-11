@@ -3,7 +3,7 @@
 
 <head>
     <title>Zjadlbym.co</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/bootstrap.min.css">
     <link rel='stylesheet' href="styles/style.css">
@@ -11,17 +11,18 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
-    <div class="container" id="wrapper">
-        <header>
-            <h1><strong>ZJADLBYM.</strong>CO</h1>
-            <i class="material-icons">local_dining</i>
-        </header>
-        <div id="form">
-            <h3>Find recipe</h3>
-            <form>
+<div class="container" id="wrapper">
+    <header>
+        <h1><strong>ZJADLBYM.</strong>CO</h1>
+        <i class="material-icons">local_dining</i>
+    </header>
+    <div id="form">
+        <h3>Find recipe</h3>
+        <form>
+            <div id="primary-search">
                 <div id="form__search-bar">
                     <div class="form-group autocomplete">
-                            <input type="text" class="form-control" id="searchBar" placeholder="Type product name">
+                        <input type="text" class="form-control" id="searchBar" placeholder="Type product name">
                     </div>
                     <button id="add" type="button" class="btn btn-primary">Add</button>
                 </div>
@@ -31,37 +32,91 @@
                 <div id="form__ingredients">
                     <!-- <p>Selected ingredients</p> -->
                 </div>
-            </form>
-            <div id="form__button">
-                <button id="search" type="button" class="btn btn-success">Search</button> 
+                <div class="text-right">
+                    <a class="" role="button" data-toggle="collapse" href="#advanced-search" aria-expanded="false"
+                       aria-controls="advanced-search">Advanced search</a>
+                </div>
+
             </div>
-        </div>
-        <div id="history" class="empty"></div>
-        <div id="results" class="empty">
-            <div class="recipes">
-            </div>
-            <div id="recipe-template">
-                <div class="recipe">
-                    <img src="#" class="recipe-thumbnail" />
-                    <span class="recipe-name"></span>
-                    <a href="#" class="recipe-url">Read more</a>
+            <div id="advanced-search" class="collapse clearfix">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-6">
+
+                            <h3>Exclude ingredients</h3>
+                            <div class="form-group autocomplete">
+                                <input type="text" class="form-control" id="exclude-ingredients-bar"
+                                       placeholder="Number">
+                            </div>
+                            <button id="add-excluding" type="button" class="btn btn-primary">Set</button>
+                            <div id="form__excluded-ingredients">
+                                <!-- <p>Selected ingredients</p> -->
+                            </div>
+
+
+                            <div id="validation-error" class="invalid-feedback">
+                                Incorrect ingredient name
+                            </div>
+                            <div id="ingredients">
+                                <p>Selected ingredients</p>
+                            </div>
+                            <div id="results">
+                                <div class="recipes">
+                                </div>
+                                <div id="recipe-template">
+                                    <div class="recipe">
+                                        <img src="#" class="recipe-thumbnail"/>
+                                        <span class="recipe-name"></span>
+                                        <a href="#" class="recipe-url">Read more</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <h3>Number of optional ingredients</h3>
+                            <div class="form-group autocomplete">
+                                <input type="text" class="form-control" id="optional-ingredients-value"
+                                       placeholder="Number">
+                            </div>
+                            <button id="set-optional-ingredients-value" type="button" class="btn btn-primary">Set
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div id="form__button">
+                <button id="search" type="button" class="btn btn-success">Search</button>
+            </div>
+        </form>
+
     </div>
-    <div id="cookie-consent">
-        <p>This site is using cookies to ensure you get the best user experience. By using our website you agree to our <u>Cookie Policy</u>.</p>
-        <button id="cookie-approval" class="btn btn-success">OK, I got it.</button>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="scripts/popper.min.js"></script>
-    <script src="scripts/bootstrap.min.js"></script>
-    <script src="scripts/autocomplete.js"></script>
-    <script src="scripts/pageManager.js"></script>
-    <script src="scripts/cookie-consent.js"></script>
-    <script>
-        autocomplete.init(["Fluor", "Salt", "Pepper", "Water", "Butter"], document.getElementById("searchBar"));
-    </script>
+
+    <!--<div id="results" class="empty">-->
+    <!--<div class="recipes">-->
+    <!--</div>-->
+    <!--<div id="recipe-template">-->
+    <!--<div class="recipe">-->
+    <!--<img src="#" class="recipe-thumbnail"/>-->
+    <!--<span class="recipe-name"></span>-->
+    <!--<a href="#" class="recipe-url">Read more</a>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+</div>
+<div id="cookie-consent">
+    <p>This site is using cookies to ensure you get the best user experience. By using our website you agree to our <u>Cookie
+        Policy</u>.</p>
+    <button id="cookie-approval" class="btn btn-success">OK, I got it.</button>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="scripts/popper.min.js"></script>
+<script src="scripts/bootstrap.min.js"></script>
+<script src="scripts/autocomplete.js"></script>
+<script src="scripts/pageManager.js"></script>
+<script src="scripts/cookie-consent.js"></script>
+<script>
+    autocomplete.init(["Fluor", "Salt", "Pepper", "Water", "Butter"], document.getElementById("searchBar"));
+</script>
 </body>
 
 </html>
