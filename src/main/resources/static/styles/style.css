@@ -205,6 +205,10 @@ header i {
     border: 0;
 }
 
+#history {
+    border: 0;
+}
+
 #cookie-consent {
     max-width: 1140px;
     position: fixed;
