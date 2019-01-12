@@ -59,18 +59,7 @@
                             </div>
                             <div id="ingredients">
                                 <p>Selected ingredients</p>
-                            </div>
-                            <div id="results">
-                                <div class="recipes">
-                                </div>
-                                <div id="recipe-template">
-                                    <div class="recipe">
-                                        <img src="#" class="recipe-thumbnail"/>
-                                        <span class="recipe-name"></span>
-                                        <a href="#" class="recipe-url">Read more</a>
-                                    </div>
-                                </div>
-                            </div>
+                            </div>                           
                         </div>
                         <div class="col-lg-6">
                             <h3>Number of optional ingredients</h3>
@@ -88,20 +77,31 @@
                 <button id="search" type="button" class="btn btn-success">Search</button>
             </div>
         </form>
-
     </div>
 
-    <!--<div id="results" class="empty">-->
-    <!--<div class="recipes">-->
-    <!--</div>-->
-    <!--<div id="recipe-template">-->
-    <!--<div class="recipe">-->
-    <!--<img src="#" class="recipe-thumbnail"/>-->
-    <!--<span class="recipe-name"></span>-->
-    <!--<a href="#" class="recipe-url">Read more</a>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
+    <div id="results" class="empty">
+        <h3>Recipes</h3>
+        <div class="recipes container-fluid">
+        </div>
+        <div id="recipe-template">
+            <div class="recipe col-xl-4 col-lg-6 col-sm-12">
+                <div class="recipe-content">
+                    <div class="aspect-ratio-container ratio-65">
+                        <div class="recipe-thumbnail"></div>
+                    </div>
+                    <div class="recipe-body">
+                        <div class="recipe-name"></div>
+                        <ul class="recipe-ingredients dashed">
+                        </ul>
+                        <a class="btn btn-primary recipe-url" target="_blank" href="#" role="button">MORE</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="row-template">
+            <div class="row"></div>
+        </div>
+    </div>
 </div>
 <div id="cookie-consent">
     <p>This site is using cookies to ensure you get the best user experience. By using our website you agree to our <u>Cookie
