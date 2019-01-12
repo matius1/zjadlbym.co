@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
@@ -32,21 +33,54 @@ public class RestController {
     private static final String COMMA = ",";
     private final String cookieName = "zjadlbym.co";
 
+    private static final Integer HISTORY_RECORDS_AMOUNT = 3;
+
     private Map<String, List<Map<Instant, String>>> sessions = new HashMap<>();
 
     private RestTemplate restTemplate = new RestTemplate();
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @RequestMapping("/history")
-    public List historyGet(HttpServletRequest request) {
+    public ResponseEntity<RecipeDto[]> recipesHistory(HttpServletRequest request) {
         Cookie cookie = WebUtils.getCookie(request, cookieName);
-
         String sessionID = cookie != null ? cookie.getValue() : "";
-
         List<Map<Instant, String>> history = sessions.getOrDefault(sessionID, Collections.emptyList());
-        logger.info("Getting history for : {} - {}", sessionID, history);
+        List<Recipe> recipesFromHistory = new ArrayList<>();
 
-        return history;
+        Integer numberOfRecipesToShow = HISTORY_RECORDS_AMOUNT;
+        Integer maxNoOfMissingIngredients = 999;
+        String ingredientsToExclude = "";
+
+        int takenHistoryRecords = 0;
+        if (history.size() == 0) {
+            return ResponseEntity.noContent().build();
+        }
+
+        do {
+            Integer index = history.size() - takenHistoryRecords++ - 1;
+            String ingredients = (String)history.get(index).values().toArray()[0];
+            String ingredientsToSearch =
+                    toLowerCase(ingredients) + COMMA + getIngredientsToExclude(toLowerCase(ingredientsToExclude));
+
+            try {
+                List<Recipe> recipesFromHistoryRecord =
+                        new ArrayList<>(getRecipesToShow(ingredientsToSearch, ingredients,
+                                maxNoOfMissingIngredients, numberOfRecipesToShow));
+
+                recipesFromHistory.addAll(recipesFromHistoryRecord);
+            }
+            catch (IOException e) {
+                return ResponseEntity.badRequest().build();
+            }
+        } while(recipesFromHistory.size() < HISTORY_RECORDS_AMOUNT && takenHistoryRecords <= history.size());
+
+        RecipeDto[] res = getRecipeDtos(recipesFromHistory, numberOfRecipesToShow);
+
+        if (res.length > 0) {
+            return ResponseEntity.ok().body(res);
+        }
+
+        return ResponseEntity.noContent().build();
     }
 
     @RequestMapping("/get")

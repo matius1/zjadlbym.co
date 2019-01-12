@@ -1,7 +1,7 @@
-$(function () {
-    const noThumbnailPlaceholder = "http://www.fecheliports.com/static/images/heliports_image_placeholder.jpg";
+$(function () { 
     const recipesPerRow = 3;
-    const ingredientsInRecipe = 4;
+    const recipeTemplate = $('#recipe-template').children('.recipe');
+    const rowTemplate = $('#row-template').children('.row');
 
     $('#search').click(function () {
         $('.recipes').empty();
@@ -13,8 +13,7 @@ $(function () {
             return;
         }
 
-        const recipeTemplate = $('#recipe-template').children('.recipe');
-        const rowTemplate = $('#row-template').children('.row');
+        renderHistorySection(rowTemplate, recipeTemplate);
         $.get("http://localhost:8080/przepis/get",
             "ingredients=" + ingredients,
             function (recipes) {
@@ -29,45 +28,75 @@ $(function () {
                     const rowNumber = recipesCounter/recipesPerRow;
                     const rowIdentifier = "row-" + rowNumber;
                     if (recipesCounter % recipesPerRow === 0) {
-                        let rowElement = rowTemplate.clone();
-                        rowElement.attr('id', rowIdentifier);
-                        rowElement.appendTo($('.recipes'));
+                        appendRow(rowTemplate, rowIdentifier, ".recipes");
                     }
 
-                    let recipeElement = recipeTemplate.clone();
-                    const recipeThumbnail = recipe.thumbnail === "" ? noThumbnailPlaceholder : recipe.thumbnail;
-                    recipeElement.find('.recipe-thumbnail').css('background-image', "url('" + recipeThumbnail + "')");
-                    recipeElement.find('.recipe-name').html(recipe.name);
-                    recipeElement.find('.recipe-url').attr('href', recipe.url);
-                    
-                    let ingredientsList = recipeElement.find('.recipe-ingredients');
-                    if (recipe.ingredients !== null && recipe.ingredients !== undefined && recipe.ingredients !== "") {
-                        var ingredientsToShow = recipe.ingredients.split(',').slice(0, ingredientsInRecipe);
-                        for (let ingredient of ingredientsToShow) {
-                            ingredientsList.append("<li>" + ingredient + "</li>");
-                        }
-                    }
-
-                    recipeElement.appendTo($('#' + rowIdentifier));
+                    appendRecipeTile(recipeTemplate, recipe, rowIdentifier, ".recipes");
                 }
                 
                 $('#results').removeClass('empty').addClass('present');
-            }).fail(function(data) {
-                let message = "";
-                switch(data.responseJSON.status) {
-                    case 500:
-                        message = "An error occured. Please try later.";
-                        break;
-                    case 400:
-                        message = "Provided data is invalid. Please remediate the form and try again."
-                        break;
-                    case 404:
-                        message = "Requested site is not found. Please try later."
-                        break;
-                }
+            }).fail(function (data) {
+            let message = "";
+            switch (data.responseJSON.status) {
+            case 500:
+                message = "An error occured. Please try later.";
+                break;
+            case 400:
+                message = "Provided data is invalid. Please remediate the form and try again."
+                break;
+            case 404:
+                message = "Requested site is not found. Please try later."
+                break;
+            }
 
-                $('.error-message').text(message);
-                $('#error').removeClass('empty').addClass('present');
-            });
+            $('.error-message').text(message);
+            $('#error').removeClass('empty').addClass('present');
+        });
     });
+
+    renderHistorySection(rowTemplate, recipeTemplate);       
 })
+
+function renderHistorySection(rowTemplate, recipeTemplate) {
+    $.get("http://localhost:8080/przepis/history", function (recipes) {
+        const recipesInHistory = 3;
+
+        $('.recipes-history').empty();
+        if (recipes === null || recipes === undefined) {
+            return;
+        }
+        for (let recipe of recipes.slice(0, recipesInHistory)) {
+            const rowIdentifier = "recipe-history-row";
+            appendRow(rowTemplate, rowIdentifier, ".recipes-history");
+            appendRecipeTile(recipeTemplate, recipe, rowIdentifier);
+        }
+        $('#history').removeClass('empty').addClass('present');
+    });
+}
+
+function appendRow(rowTemplate, rowIdentifier, parentIdentifier) {
+    let rowElement = rowTemplate.clone();
+    rowElement.attr('id', rowIdentifier);
+    rowElement.appendTo($(parentIdentifier));
+}
+
+function appendRecipeTile(recipeTemplate, recipe, rowIdentifier) {
+    const noThumbnailPlaceholder = "http://www.fecheliports.com/static/images/heliports_image_placeholder.jpg";
+    const ingredientsInRecipe = 4;
+
+    let recipeElement = recipeTemplate.clone();
+    const recipeThumbnail = recipe.thumbnail === "" ? noThumbnailPlaceholder : recipe.thumbnail;
+    recipeElement.find('.recipe-thumbnail').css('background-image', "url('" + recipeThumbnail + "')");
+    recipeElement.find('.recipe-name').html(recipe.name);
+    recipeElement.find('.recipe-url').attr('href', recipe.url);
+
+    let ingredientsList = recipeElement.find('.recipe-ingredients');
+    if (recipe.ingredients !== null && recipe.ingredients !== undefined && recipe.ingredients !== "") {
+        var ingredientsToShow = recipe.ingredients.split(',').slice(0, ingredientsInRecipe);
+        for (let ingredient of ingredientsToShow) {
+            ingredientsList.append("<li class='recipe-ingredient'>" + ingredient + "</li>");
+        }
+    }
+
+    recipeElement.appendTo($('#' + rowIdentifier));
+}
