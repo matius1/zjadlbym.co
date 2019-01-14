@@ -5,6 +5,9 @@ $(function () {
 
     $('#search').click(function () {
         $('.recipes').empty();
+        $('#error').removeClass('present').addClass('empty');
+        $('#info').removeClass('present').addClass('empty');
+
         let ingredients = $('.ingredient').map(function () { return this.dataset.name }).get().join();
         if (ingredients === undefined || ingredients === null || ingredients === '') {
             return;
@@ -16,6 +19,11 @@ $(function () {
             function (recipes) {
                 console.log(recipes);
                 let recipesCounter = 0;
+                if (recipes === null || recipes === undefined) {
+                    $('#info').removeClass('empty').addClass('present');
+                    return;
+                }
+
                 for (let recipe of recipes) {
                     const rowNumber = recipesCounter/recipesPerRow;
                     const rowIdentifier = "row-" + rowNumber;
@@ -27,7 +35,23 @@ $(function () {
                 }
                 
                 $('#results').removeClass('empty').addClass('present');
-            });
+            }).fail(function (data) {
+            let message = "";
+            switch (data.responseJSON.status) {
+            case 500:
+                message = "An error occured. Please try later.";
+                break;
+            case 400:
+                message = "Provided data is invalid. Please remediate the form and try again."
+                break;
+            case 404:
+                message = "Requested site is not found. Please try later."
+                break;
+            }
+
+            $('.error-message').text(message);
+            $('#error').removeClass('empty').addClass('present');
+        });
     });
 
     renderHistorySection(rowTemplate, recipeTemplate);       
