@@ -3,21 +3,31 @@ $(function () {
     const recipeTemplate = $('#recipe-template').children('.recipe');
     const rowTemplate = $('#row-template').children('.row');
 
+    renderHistorySection(rowTemplate, recipeTemplate);
+
     $('#search').click(function () {
         $('.recipes').empty();
         $('#error').removeClass('present').addClass('empty');
         $('#info').removeClass('present').addClass('empty');
 
-        let ingredients = $('.ingredient').map(function () { return this.dataset.name }).get().join();
+        let ingredients = $('#selected_ingredients .ingredient').map(function () { return this.dataset.name }).get().join();
+        let excluded = $('#excluded_ingredients .ingredient').map(function () { return this.dataset.name }).get().join();
+        let optional = $('#optional_ingredients').val() || 999;
+
+
+
         if (ingredients === undefined || ingredients === null || ingredients === '') {
             return;
         }
 
-        renderHistorySection(rowTemplate, recipeTemplate);
+        // console.log(ingredients);
+        // console.log(excluded);
+        // console.log(optional);
+
         $.get("http://localhost:8080/przepis/get",
-            "ingredients=" + ingredients,
+            "ingredients=" + ingredients + "&ingredientsToExclude=" + excluded + "&maxNoOfMissingIngredients=" + optional,
             function (recipes) {
-                console.log(recipes);
+                // console.log(recipes);
                 let recipesCounter = 0;
                 if (recipes === null || recipes === undefined) {
                     $('#info').removeClass('empty').addClass('present');
@@ -32,6 +42,22 @@ $(function () {
                     }
 
                     appendRecipeTile(recipeTemplate, recipe, rowIdentifier, ".recipes");
+                }
+
+                var ingredientsEl = $('.recipe-ingredient');
+
+                // console.log(ingredients);
+
+                var searched = ingredients.split(',');
+
+                for (let ingredientFound of ingredientsEl) {
+                    // console.log(ingredientFound.innerHTML);
+                    for (let ingredient of searched) {
+                        // console.log(ingredient);
+                        if ((ingredientFound.innerHTML).replace(/ /g,'').toLowerCase() === ingredient.toLowerCase()) {
+                            ingredientFound.style.color = "green";
+                        }
+                    }
                 }
                 
                 $('#results').removeClass('empty').addClass('present');
@@ -53,16 +79,17 @@ $(function () {
             $('#error').removeClass('empty').addClass('present');
         });
     });
-
-    renderHistorySection(rowTemplate, recipeTemplate);       
-})
+    // renderHistorySection(rowTemplate, recipeTemplate);
+});
 
 function renderHistorySection(rowTemplate, recipeTemplate) {
     $.get("http://localhost:8080/przepis/history", function (recipes) {
         const recipesInHistory = 3;
 
+        // console.log(recipes.length);
+
         $('.recipes-history').empty();
-        if (recipes === null || recipes === undefined) {
+        if (!recipes) {
             return;
         }
         for (let recipe of recipes.slice(0, recipesInHistory)) {

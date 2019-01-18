@@ -20,7 +20,7 @@
         <h3>Find recipe</h3>
         <form>
             <div id="primary-search">
-                <div id="form__search-bar">
+                <div class="form__search-bar">
                     <div class="form-group autocomplete">
                         <input type="text" class="form-control" id="searchBar" placeholder="Type product name">
                     </div>
@@ -29,47 +29,57 @@
                 <div id="form__validation" class="invalid-feedback">
                     <p>Incorrect ingredient name</p>
                 </div>
-                <div id="form__ingredients">
-                    <!-- <p>Selected ingredients</p> -->
-                </div>
                 <div class="text-right">
                     <a class="" role="button" data-toggle="collapse" href="#advanced-search" aria-expanded="false"
                        aria-controls="advanced-search">Advanced search</a>
                 </div>
-
+                <div id="selected_ingredients" class="form__ingredients">
+                    <p>Selected ingredients</p>
+                </div>
             </div>
             <div id="advanced-search" class="collapse clearfix">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-5 advanced-row">
 
                             <h3>Exclude ingredients</h3>
-                            <div class="form-group autocomplete">
-                                <input type="text" class="form-control" id="exclude-ingredients-bar"
-                                       placeholder="Number">
+                            <div class="form__search-bar">
+                                <div class="form-group autocomplete">
+                                    <input id="excluded_input" type="text" class="form-control" placeholder="Excluded">
+                                </div>
+                                <button id="excluded" type="button" class="add btn btn-primary">Add</button>
                             </div>
-                            <button id="add-excluding" type="button" class="btn btn-primary">Set</button>
-                            <div id="form__excluded-ingredients">
-                                <!-- <p>Selected ingredients</p> -->
+                            <!--<div class="form-group autocomplete">-->
+                                <!--<input type="text" class="form-control" id="exclude-ingredients-bar"-->
+                                       <!--placeholder="Number">-->
+                            <!--</div>-->
+                            <!--<button id="add-excluding" type="button" class="btn btn-primary">ADD</button>-->
+                            <div id="excluded_ingredients" class="form__ingredients">
+                                 <p>Excluded ingredients</p>
                             </div>
 
-
-                            <div id="validation-error" class="invalid-feedback">
-                                Incorrect ingredient name
-                            </div>
-                            <div id="ingredients">
-                                <p>Selected ingredients</p>
-                            </div>                           
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-5 offset-lg-1 advanced-row">
                             <h3>Number of optional ingredients</h3>
-                            <div class="form-group autocomplete">
-                                <input type="text" class="form-control" id="optional-ingredients-value"
-                                       placeholder="Number">
+                            <div class="form__search-bar">
+                                <div class="form-group autocomplete">
+                                    <input id="optional_ingredients" type="text" class="form-control" placeholder="Number">
+                                </div>
+                                <button id="optional" type="button" class="add btn btn-primary" style="visibility: hidden;">Add</button>
                             </div>
-                            <button id="set-optional-ingredients-value" type="button" class="btn btn-primary">Set
-                            </button>
+                            <!--<div class="form-group autocomplete">-->
+                                <!--<input type="text" class="form-control" id="optional-ingredients-value"-->
+                                       <!--placeholder="Number">-->
+                            <!--</div>-->
+                            <!--<button id="set-optional-ingredients-value" type="button" class="btn btn-primary">ADD-->
                         </div>
+                        <!--<div id="optional_ingredients" class="form__ingredients">-->
+                            <!--<p>Number of optional ingredients</p>-->
+                        <!--</div>-->
+                        <!--<div id="ingredients">-->
+                            <!--<p>Selected ingredients</p>-->
+                        <!--</div>-->
+
                     </div>
                 </div>
             </div>
@@ -130,7 +140,7 @@
 <script src="scripts/pageManager.js"></script>
 <script src="scripts/cookie-consent.js"></script>
 <script>
-    autocomplete.init(["Fluor", "Salt", "Pepper", "Water", "Butter"], document.getElementById("searchBar"));
+    autocomplete.init(["Flour", "Cheese", "Chocolate", "Eggs", "Milk", "Salt", "Pepper", "Water", "Butter"], document.getElementById("searchBar"));
 </script>
 </body>
 

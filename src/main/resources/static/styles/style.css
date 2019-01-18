@@ -48,17 +48,17 @@ header i {
     position: relative;
 }
 
-#form__search-bar {
+.form__search-bar {
     display: flex;
     flex-direction: row;
 }
 
-#form__search-bar div {
+.form__search-bar div {
     flex-grow: 9;
     margin-bottom: 0;
 }
 
-#form__search-bar #add {
+.form__search-bar button {
     /* flex-grow: 1; */
     width: 100px;;
     align-self: flex-start;
@@ -68,14 +68,14 @@ header i {
     margin: 10px;
 }
 
-#form__ingredients {
+.form__ingredients {
     margin: 10px 0;
 }
 
 .ingredient {
     position: relative;
     display: inline-block;
-    width: 100px;
+    width: 120px;
     background:DodgerBlue;
     padding: 5px 10px;
     color: white;
@@ -218,6 +218,7 @@ header i {
     left: 0;
     right: 0;
     margin: 0 auto;
+    background: white;
 }
 
 #cookie-consent.accepted {
@@ -273,3 +274,29 @@ ul.dashed > li {
 ul.dashed > li:before {
     content: "- ";
 }
+
+.advanced-row {
+    padding: 0 !important;
+}
+
+/*.form-group {*/
+    /*display: flex;*/
+    /*flex-direction: row;*/
+/*}*/
+
+
+/*!*#form__search-bar {*!*/
+    /*!*display: flex;*!*/
+    /*!*flex-direction: row;*!*/
+/*!*}*!*/
+
+/*.form-group div {*/
+    /*flex-grow: 9;*/
+    /*margin-bottom: 0;*/
+/*}*/
+
+/*.form-group button {*/
+    /*!* flex-grow: 1; *!*/
+    /*width: 100px;;*/
+    /*align-self: flex-start;*/
+/*}*/

@@ -89,13 +89,13 @@ var autocomplete = (function () {
                     deleteBtn.className = 'ingredient--delete';
                     div.appendChild(nameSpan);
                     deleteBtn = div.appendChild(deleteBtn);
-                    document.getElementById('form__ingredients').appendChild(div);                    
+                    document.getElementById('selected_ingredients').appendChild(div);
                     options.splice(i, 1);
                     input.value = '';
 
                     deleteBtn.addEventListener('click', function (e) {
                         if (this.parentElement.dataset.name !== "" && this.parentElement.dataset.name.substr(0, this.parentElement.dataset.name.length).toUpperCase() == this.parentElement.dataset.name.toUpperCase()) {
-                            document.getElementById('form__ingredients').removeChild(this.parentElement);
+                            document.getElementById('selected_ingredients').removeChild(this.parentElement);
                             options.push(this.parentElement.dataset.name);
                         }
                     });
@@ -120,12 +120,12 @@ var autocomplete = (function () {
                     deleteBtn.className = 'ingredient--delete';
                     div.appendChild(nameSpan);
                     deleteBtn = div.appendChild(deleteBtn);
-                    document.getElementById('form__ingredients').appendChild(div);
+                    document.getElementById('selected_ingredients').appendChild(div);
                     input.value = '';
 
                     deleteBtn.addEventListener('click', function (e) {
                         if (this.parentElement.dataset.name !== "" && this.parentElement.dataset.name.substr(0, this.parentElement.dataset.name.length).toUpperCase() == this.parentElement.dataset.name.toUpperCase()) {
-                            document.getElementById('form__ingredients').removeChild(this.parentElement);
+                            document.getElementById('selected_ingredients').removeChild(this.parentElement);
                         }
                     });
                 } else {
@@ -133,6 +133,49 @@ var autocomplete = (function () {
                 }
             }
         });
+
+        document.getElementById("excluded").addEventListener("click", function (e) {
+                var input = document.getElementById("excluded_input");
+                var div = document.createElement('div');
+                div.className = 'ingredient';
+                div.setAttribute('data-name', input.value);
+                var nameSpan = document.createElement('span');
+                nameSpan.className = "ingredient--name";
+                nameSpan.innerHTML = input.value;
+                var deleteBtn = document.createElement('span');
+                deleteBtn.className = 'ingredient--delete';
+                div.appendChild(nameSpan);
+                deleteBtn = div.appendChild(deleteBtn);
+                document.getElementById('excluded_ingredients').appendChild(div);
+                input.value = '';
+
+                deleteBtn.addEventListener('click', function (e) {
+                    if (this.parentElement.dataset.name !== "" && this.parentElement.dataset.name.substr(0, this.parentElement.dataset.name.length).toUpperCase() == this.parentElement.dataset.name.toUpperCase()) {
+                        document.getElementById('excluded_ingredients').removeChild(this.parentElement);
+                    }
+                });
+        });
+
+        // document.getElementById("optional").addEventListener("click", function (e) {
+        //     var div = document.createElement('div');
+        //     div.className = 'ingredient';
+        //     div.setAttribute('data-name', input.value);
+        //     var nameSpan = document.createElement('span');
+        //     nameSpan.className = "ingredient--name";
+        //     nameSpan.innerHTML = input.value;
+        //     var deleteBtn = document.createElement('span');
+        //     deleteBtn.className = 'ingredient--delete';
+        //     div.appendChild(nameSpan);
+        //     deleteBtn = div.appendChild(deleteBtn);
+        //     document.getElementById('optional_ingredients').appendChild(div);
+        //     input.value = '';
+        //
+        //     deleteBtn.addEventListener('click', function (e) {
+        //         if (this.parentElement.dataset.name !== "" && this.parentElement.dataset.name.substr(0, this.parentElement.dataset.name.length).toUpperCase() == this.parentElement.dataset.name.toUpperCase()) {
+        //             document.getElementById('optional_ingredients').removeChild(this.parentElement);
+        //         }
+        //     });
+        // });
     };
 
     var init = function(array, el) {
