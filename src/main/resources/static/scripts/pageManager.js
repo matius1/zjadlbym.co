@@ -20,14 +20,9 @@ $(function () {
             return;
         }
 
-        // console.log(ingredients);
-        // console.log(excluded);
-        // console.log(optional);
-
         $.get("http://localhost:8080/przepis/get",
             "ingredients=" + ingredients + "&ingredientsToExclude=" + excluded + "&maxNoOfMissingIngredients=" + optional,
             function (recipes) {
-                // console.log(recipes);
                 let recipesCounter = 0;
                 if (recipes === null || recipes === undefined) {
                     $('#info').removeClass('empty').addClass('present');
@@ -46,14 +41,10 @@ $(function () {
 
                 var ingredientsEl = $('.recipe-ingredient');
 
-                // console.log(ingredients);
-
                 var searched = ingredients.split(',');
 
                 for (let ingredientFound of ingredientsEl) {
-                    // console.log(ingredientFound.innerHTML);
                     for (let ingredient of searched) {
-                        // console.log(ingredient);
                         if ((ingredientFound.innerHTML).replace(/ /g,'').toLowerCase() === ingredient.toLowerCase()) {
                             ingredientFound.style.color = "green";
                         }
@@ -78,15 +69,16 @@ $(function () {
             $('.error-message').text(message);
             $('#error').removeClass('empty').addClass('present');
         });
+
+        if (sessionStorage.getItem("cookie-consent") === "true") {
+            renderHistorySection(rowTemplate, recipeTemplate);
+        }
     });
-    // renderHistorySection(rowTemplate, recipeTemplate);
 });
 
 function renderHistorySection(rowTemplate, recipeTemplate) {
     $.get("http://localhost:8080/przepis/history", function (recipes) {
         const recipesInHistory = 3;
-
-        // console.log(recipes.length);
 
         $('.recipes-history').empty();
         if (!recipes) {
@@ -109,13 +101,15 @@ function appendRow(rowTemplate, rowIdentifier, parentIdentifier) {
 
 function appendRecipeTile(recipeTemplate, recipe, rowIdentifier) {
     const noThumbnailPlaceholder = "http://www.fecheliports.com/static/images/heliports_image_placeholder.jpg";
-    const ingredientsInRecipe = 4;
+    const maxIngredientsInRecipe = 4;
+    var lettersInLine = 20;
 
     let recipeElement = recipeTemplate.clone();
     const recipeThumbnail = recipe.thumbnail === "" ? noThumbnailPlaceholder : recipe.thumbnail;
     recipeElement.find('.recipe-thumbnail').css('background-image', "url('" + recipeThumbnail + "')");
     recipeElement.find('.recipe-name').html(recipe.name);
     recipeElement.find('.recipe-url').attr('href', recipe.url);
+    const ingredientsInRecipe = maxIngredientsInRecipe - Math.floor(recipe.name.length/lettersInLine);
 
     let ingredientsList = recipeElement.find('.recipe-ingredients');
     if (recipe.ingredients !== null && recipe.ingredients !== undefined && recipe.ingredients !== "") {
