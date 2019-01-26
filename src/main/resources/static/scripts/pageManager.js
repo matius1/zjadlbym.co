@@ -13,15 +13,14 @@ $(function () {
         let ingredients = $('#selected_ingredients .ingredient').map(function () { return this.dataset.name }).get().join();
         let excluded = $('#excluded_ingredients .ingredient').map(function () { return this.dataset.name }).get().join();
         let optional = $('#optional_ingredients').val() || 999;
-
-
+        let number = $('#amount').val() || 10;
 
         if (ingredients === undefined || ingredients === null || ingredients === '') {
             return;
         }
 
         $.get("http://localhost:8080/przepis/get",
-            "ingredients=" + ingredients + "&ingredientsToExclude=" + excluded + "&maxNoOfMissingIngredients=" + optional,
+            "ingredients=" + ingredients + "&ingredientsToExclude=" + excluded + "&maxNoOfMissingIngredients=" + optional + "&numberOfRecipesToShow=" + number,
             function (recipes) {
                 let recipesCounter = 0;
                 if (recipes === null || recipes === undefined) {

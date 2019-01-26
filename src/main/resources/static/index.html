@@ -40,7 +40,7 @@
             <div id="advanced-search" class="collapse clearfix">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-lg-5 advanced-row">
+                        <div class="col-lg-3 advanced-row">
 
                             <h3>Exclude ingredients</h3>
                             <div class="form__search-bar">
@@ -59,17 +59,31 @@
                             </div>
 
                         </div>
-                        <div class="col-lg-5 offset-lg-1 advanced-row">
+                        <div class="col-lg-4 offset-lg-1 advanced-row">
                             <h3>Number of ingredients</h3>
                             <div class="form__search-bar">
                                 <div class="form-group autocomplete">
-                                    <input id="optional_ingredients" type="text" class="form-control" placeholder="Number">
+                                    <input id="optional_ingredients" type="number" class="form-control" placeholder="Number">
                                 </div>
-                                <button id="optional" type="button" class="add btn btn-primary" style="visibility: hidden;">Add</button>
+                                <!--<button id="optional" type="button" class="add btn btn-primary" style="visibility: hidden;">Add</button>-->
                             </div>
                             <!--<div class="form-group autocomplete">-->
                                 <!--<input type="text" class="form-control" id="optional-ingredients-value"-->
                                        <!--placeholder="Number">-->
+                            <!--</div>-->
+                            <!--<button id="set-optional-ingredients-value" type="button" class="btn btn-primary">ADD-->
+                        </div>
+                        <div class="col-lg-3 offset-lg-1 advanced-row">
+                            <h3>Number of recipes</h3>
+                            <div class="form__search-bar">
+                                <div class="form-group autocomplete">
+                                    <input id="amount" type="number" class="form-control" placeholder="Number">
+                                </div>
+                                <!--<button id="amount_btn" type="button" class="add btn btn-primary" style="visibility: hidden;">Add</button>-->
+                            </div>
+                            <!--<div class="form-group autocomplete">-->
+                            <!--<input type="text" class="form-control" id="optional-ingredients-value"-->
+                            <!--placeholder="Number">-->
                             <!--</div>-->
                             <!--<button id="set-optional-ingredients-value" type="button" class="btn btn-primary">ADD-->
                         </div>

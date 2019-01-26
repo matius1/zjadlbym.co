@@ -277,8 +277,13 @@ ul.dashed > li:before {
 
 .advanced-row {
     padding: 0 !important;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
+#form__button {
+    margin: 20px 0;
+}
 /*.form-group {*/
     /*display: flex;*/
     /*flex-direction: row;*/
